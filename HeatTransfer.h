@@ -132,7 +132,7 @@ public:
 
   //! \brief Returns the name of the primary solution field.
   //! \param[in] prefix Name prefix
-  std::string getField1Name (size_t, const char* prefix) const;
+  std::string getField1Name (size_t, const char* prefix) const override;
 
 protected:
   bool withMass; //!< True to enable mass dependent terms

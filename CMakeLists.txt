@@ -61,6 +61,12 @@ if(NOT MPI_FOUND OR IFEM_SERIAL_TESTS_IN_PARALLEL)
 endif()
 list(APPEND TEST_APPS HeatMassTransfer HeatTransfer)
 
+# Unit tests
+IFEM_add_test_app(${PROJECT_SOURCE_DIR}/Test/*.C
+                  ${PROJECT_SOURCE_DIR}/Test
+                  IFEM-THM CommonHM
+                  IFEMAppCommon ${IFEM_LIBRARIES})
+
 if(IFEM_COMMON_APP_BUILD)
   set(TEST_APPS ${TEST_APPS} PARENT_SCOPE)
   set(UNIT_TEST_NUMBER ${UNIT_TEST_NUMBER} PARENT_SCOPE)
