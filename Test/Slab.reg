@@ -1,0 +1,67 @@
+Slab.xinp
+
+Input file: Slab.xinp
+Equation solver: 2
+Number of Gauss points: 4
+Time integration: Backward Euler
+Heat-mass transfer problem properties:
+	 Heat transfer coefficient, h = 33.4
+	 Oven temperature, To = 175
+	 Diffusion coefficient, D = 4e-10
+	 Dissipation coefficient, f = 0.88
+	 Fat properties:
+		 Density, rho = 920
+		 Composition, y = 0.03
+	 Protein properties:
+		 Density, rho = 1320
+		 Composition, y = 0.2
+	 Carbohydrate properties:
+		 Density, rho = 1600
+		 Composition, y = 0.02
+	 Water properties:
+		 Density, rho = 998
+		 Composition, y = 0.75
+		 Specific heat capacity, c = 4170
+		 Latent heat of vaporization, H = 2.3e+06
+	Properties of meat:
+		 Density, rho = 1054.71
+		 Specific heat capacity, c = 3642
+		 Thermal conductivity, k = 0.4
+		 Permeability, K = 1e-17
+	Initial condition constant function: 13
+	Field name: "temperature1" on basis 1 (component 1)
+	Initial condition constant function: 0.75
+	Field name: "concentration1" on basis 1 (component 1)
+Number of elements    64
+Number of nodes       125
+Number of dofs        125
+Number of unknowns    125
+Loading initial condition for "temperature1" component 1
+from constant function: 13
+Loading initial condition for "concentration1" component 1
+from constant function: 0.75
+  step = 1  time = 0.1
+  Temperature summary:  L2-norm        : 13.0051
+                       Max temperature : 13.0263
+  Concentration summary:  L2-norm        : 0.75
+                       Max concentration : 0.750002
+  step = 2  time = 0.2
+  Temperature summary:  L2-norm        : 13.0102
+                       Max temperature : 13.0525
+  Concentration summary:  L2-norm        : 0.750001
+                       Max concentration : 0.750003
+  step = 3  time = 0.3
+  Temperature summary:  L2-norm        : 13.0153
+                       Max temperature : 13.0786
+  Concentration summary:  L2-norm        : 0.750001
+                       Max concentration : 0.750005
+  step = 4  time = 0.4
+  Temperature summary:  L2-norm        : 13.0204
+                       Max temperature : 13.1047
+  Concentration summary:  L2-norm        : 0.750001
+                       Max concentration : 0.750006
+  step = 5  time = 0.5
+  Temperature summary:  L2-norm        : 13.0254
+                       Max temperature : 13.1308
+  Concentration summary:  L2-norm        : 0.750001
+                       Max concentration : 0.750008

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<simulation>
+
+  <!-- General - geometry definitions !-->
+  <geometry Lx="0.027" Ly="0.02" Lz="0.04">
+    <refine patch="1" u="3" v="3" w="3"/>
+  </geometry>
+
+  <hmproperties heat_transfer_coef="33.4" oven_temperature="175"
+                diffusion="4e-10" dissipation_coeff="0.88">
+    <fat density="920" composition="0.03"/>
+    <protein density="1320" composition="0.2"/>
+    <carbohydrate density="1600" composition="0.02"/>
+    <water density="998" composition="0.75" capacity="4170" vaporization_heat="2.3e6"/>
+    <meat conductivity="0.4" permeability="1e-17"/>
+  </hmproperties>
+  <!--
+       1 -> 6
+       2 -> 3
+       3 -> 2
+       4 -> 4
+       5 -> 1
+       6 -> 5
+  -->
+
+  <heattransfer>
+    <geometry>
+      <topologysets>
+        <set name="Robin" type="face">
+          <item patch="1">2 3 5 6</item>
+        </set>
+      </topologysets>
+    </geometry>
+    <boundaryconditions>
+      <robin set="Robin"/>
+    </boundaryconditions>
+    <initialcondition field="temperature1" type="constant" comp="1">13</initialcondition>
+  </heattransfer>
+
+  <masstransfer>
+    <geometry>
+      <topologysets>
+        <set name="Robin" type="face">
+          <item patch="1">2 3 6</item>
+        </set>
+      </topologysets>
+    </geometry>
+    <initialcondition field="concentration1" type="constant" comp="1">0.75</initialcondition>
+    <boundaryconditions>
+      <robin set="Robin"/>
+    </boundaryconditions>
+  </masstransfer>
+
+  <timestepping start="0" end="0.5" dt="0.1" type="be"/>
+
+  <discretization>
+    <nGauss>2</nGauss>
+  </discretization>
+
+</simulation>
