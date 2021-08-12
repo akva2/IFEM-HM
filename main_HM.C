@@ -28,7 +28,7 @@
 
 
 /*!
-  \brief Runs the transient beef problem.
+  \brief Runs the transient heat-mass transfer problem.
 */
 
 template<class Dim, template<class T1, class T2> class HMBase>
@@ -45,15 +45,16 @@ int runSimulator (char* infile, const HMArgs& args)
   MassTransfer mass(Dim::dimension, args.timeMethod);
   MassSim massSim(mass);
 
-  HMSim beefSim(heatSim, massSim);
-  SIMSolver<HMSim> solver(beefSim);
+  HMSim hmSim(heatSim, massSim);
+
+  SIMSolver<HMSim> solver(hmSim);
 
   // Read in model definitions
   if (!heatSim.read(infile) || !massSim.read(infile))
     return 1;
 
   // Read in model definitions
-  if (!solver.read(infile))
+  if (!hmSim.readXML(infile,false) || !solver.read(infile))
     return 1;
 
   if (!heatSim.preprocess() || !massSim.preprocess())
@@ -64,7 +65,7 @@ int runSimulator (char* infile, const HMArgs& args)
 
   heatSim.setInitialConditions();
   massSim.setInitialConditions();
-  beefSim.setupDependencies();
+  hmSim.setupDependencies();
 
   heatSim.opt.print(IFEM::cout,true) << std::endl;
 
@@ -83,7 +84,7 @@ int runSimulator (char* infile, const HMArgs& args)
 
 
 /*!
-  \brief Choose coupling and run the transient beef problem.
+  \brief Choose coupling and run the transient heat-mass transfer problem.
 */
 template<class Dim>
 int runCoupling(char* infile, const HMArgs& args)
