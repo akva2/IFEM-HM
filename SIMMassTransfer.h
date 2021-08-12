@@ -166,9 +166,6 @@ public:
     return true;
   }
 
-  //! \brief Returns the maximum number of iterations.
-  int getMaxit() const { return 100; }
-
   //! \brief Solves the linearized system of current iteration.
   //! \param[in] tp Time stepping parameters
   //! \details Since this solver is linear, this is just a normal solve.
@@ -184,7 +181,7 @@ public:
   {
     Dim::myInts.insert(std::make_pair(0,Dim::myProblem));
 
-    for (Property& p : Dim::myProps)
+    for (const Property& p : Dim::myProps)
       if (p.pcode == Property::ROBIN)
         if (Dim::myInts.find(p.pindx) == Dim::myInts.end())
           Dim::myInts.insert(std::make_pair(p.pindx,&robinBC));

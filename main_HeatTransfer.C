@@ -1,13 +1,13 @@
 // $Id$
 //==============================================================================
 //!
-//! \file main_HM.C
+//! \file main_HeatTransfer.C
 //!
 //! \date Mar 13 2020
 //!
 //! \author Arne Morten Kvarving / SINTEF
 //!
-//! \brief Main program for the isogeometric mas-heat transfer solver.
+//! \brief Main program for the isogeometric heat transfer solver.
 //!
 //==============================================================================
 

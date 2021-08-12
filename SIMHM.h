@@ -14,9 +14,10 @@
 #ifndef _SIM_HM_H_
 #define _SIM_HM_H_
 
-#include "TimeStep.h"
 #include "SIMCoupledSI.h"
 #include "SIMsolution.h"
+#include "TimeStep.h"
+#include "XMLInputBase.h"
 
 
 /*!
@@ -25,7 +26,8 @@
 
 template<class HeatSolver, class MassSolver,
          template<class T1, class T2> class Coupling>
-class SIMHMBase : public Coupling<HeatSolver,MassSolver>
+class SIMHMBase : public Coupling<HeatSolver,MassSolver>,
+                  public XMLInputBase
 {
 public:
   //! \brief Enum announcing the dimensionality (used for template writing).
@@ -39,6 +41,9 @@ public:
 
   //! \brief Empty destructor. We don't own our subsolvers.
   virtual ~SIMHMBase() {}
+
+  //! \brief Dummy parse method.
+  bool parse(const TiXmlElement*) override { return true; }
 
   //! \brief Initializes and sets up field dependencies.
   void setupDependencies() override
@@ -67,6 +72,22 @@ public:
   {
   }
 
+  //! \brief Parse sub-iteration settings.
+  bool parse(const TiXmlElement* elem) override
+  {
+    if (!strcasecmp(elem->Value(), "heatmasstransfer")) {
+      const TiXmlElement* child = elem->FirstChildElement();
+      for (; child; child = child->NextSiblingElement())
+        if (!strcasecmp(child->Value(),"subiterations")) {
+          this->parseIterations(child);
+          utl::getAttribute(child,"tol",cycleTol);
+          IFEM::cout <<"\t\ttol = "<< cycleTol << std::endl;
+        }
+    }
+
+    return true;
+  }
+
   //! \brief Check convergence of the total system.
   SIM::ConvStatus checkConvergence(const TimeStep& tp,
                                    SIM::ConvStatus status1,
@@ -88,8 +109,7 @@ public:
     prevTemp = static_cast<const SIMsolution&>(this->S1).getSolution(0);
     prevMass = static_cast<const SIMsolution&>(this->S2).getSolution(0);
 
-    int maxCycle = this->S1.getMaxit();
-    double cycleTol = this->S1.getSubItTol();
+    int maxCycle = this->getMaxit(tp.step);
     IFEM::cout <<"  cycle "<< tp.iter <<": Res = "<< rConv << std::endl;
     if (rConv < cycleTol) {
       prevTemp.clear();
@@ -98,7 +118,7 @@ public:
     } else if (tp.iter < maxCycle)
       return SIM::OK;
 
-    std::cerr <<"SIMBeefSI::checkConvergence: Did not converge in "
+    std::cerr <<"SIMHMSI::checkConvergence: Did not converge in "
               << maxCycle <<" staggering cycles, bailing.."<< std::endl;
     return SIM::DIVERGED;
   }
@@ -106,6 +126,7 @@ public:
 protected:
   Vector prevTemp; //!< Previous temperature solution
   Vector prevMass; //!< Previous mass solution
+  double cycleTol = 1e-6; //!< Sub-iteration tolerance
 };
 
 #endif
