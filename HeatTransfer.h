@@ -78,9 +78,9 @@ public:
   //! \param[in] n Number of spatial dimensions
   //! \param[in] mass True to enable mass dependent terms
   //! \param[in] method The time integration method to use
-  HeatTransfer(unsigned short int n,
-               bool mass = true,
-               TimeIntegration::Method method = TimeIntegration::BE);
+  explicit HeatTransfer(unsigned short int n,
+                        bool mass = true,
+                        TimeIntegration::Method method = TimeIntegration::BE);
 
   //! \brief Empty destructor.
   virtual ~HeatTransfer() {}

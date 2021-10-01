@@ -77,8 +77,8 @@ public:
   //! \brief The default constructor initializes all pointers to zero.
   //! \param[in] n Number of spatial dimensions
   //! \param[in] method The time integration method to use
-  MassTransfer(unsigned short int,
-               TimeIntegration::Method method = TimeIntegration::BE);
+  explicit MassTransfer(unsigned short int,
+                        TimeIntegration::Method method = TimeIntegration::BE);
 
   //! \brief Empty destructor.
   virtual ~MassTransfer() {}
