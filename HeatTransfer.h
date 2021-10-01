@@ -136,7 +136,6 @@ public:
 
 protected:
   bool withMass; //!< True to enable mass dependent terms
-  TimeIntegration::Method timeMethod; //!< Time stepping method used
   HMProperties props; //!< Material properties
   Vector concentration; //!< Externally provided mass concentration
   TimeIntegration::BDF bdf; //!< BDF time stepping helper

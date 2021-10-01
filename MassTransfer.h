@@ -111,7 +111,6 @@ public:
    std::string getField1Name (size_t, const char* prefix) const override;
 
 protected:
-  TimeIntegration::Method timeMethod; //!< Time stepping method used
   HMProperties props; //!< Material properties
   Vector temperature; //!< Externally provided temperature
   TimeIntegration::BDF bdf; //!< BDF time stepping helper
