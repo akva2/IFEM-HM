@@ -12,11 +12,18 @@
 //==============================================================================
 
 #include "MassTransfer.h"
+
 #include "ElmMats.h"
 #include "FiniteElement.h"
+#include "LocalIntegral.h"
 #include "TimeDomain.h"
 #include "Utilities.h"
+#include "Vec3.h"
 #include "Vec3Oper.h"
+
+#include <ext/alloc_traits.h>
+#include <iostream>
+#include <memory>
 
 
 MassTransfer::MassTransfer (unsigned short int n,

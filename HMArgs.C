@@ -13,8 +13,14 @@
 
 #include "HMArgs.h"
 #include "IFEM.h"
+#include "LogStream.h"
 #include "Utilities.h"
 #include "tinyxml.h"
+
+#include <iostream>
+#include <string>
+#include <strings.h>
+#include <vector>
 
 
 bool HMArgs::parseArg (const char* argv)

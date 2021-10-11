@@ -15,7 +15,9 @@
 #define _SIM_HEAT_TRANSFER_H
 
 #include "DataExporter.h"
+#include "IFEM.h"
 #include "Profiler.h"
+#include "Property.h"
 #include "SIMenums.h"
 #include "SIMMultiPatchModelGen.h"
 #include "SIMsolution.h"

@@ -17,9 +17,20 @@
 #include "BDF.h"
 #include "EqualOrderOperators.h"
 #include "IntegrandBase.h"
+#include "MatVec.h"
 #include "TimeIntUtils.h"
 
 #include "HMProperties.h"
+
+#include <cstddef>
+#include <string>
+#include <vector>
+
+
+class FiniteElement;
+class LocalIntegral;
+struct TimeDomain;
+class Vec3;
 
 
 /*!
