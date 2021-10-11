@@ -14,9 +14,13 @@
 #include "HeatTransfer.h"
 #include "ElmMats.h"
 #include "FiniteElement.h"
+#include "LocalIntegral.h"
 #include "TimeDomain.h"
 #include "Utilities.h"
 #include "Vec3Oper.h"
+
+#include <iostream>
+#include <memory>
 
 
 HeatTransfer::HeatTransfer (unsigned short int n,

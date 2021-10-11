@@ -13,9 +13,16 @@
 
 #include "HMProperties.h"
 #include "IFEM.h"
+#include "LogStream.h"
 #include "Utilities.h"
 
 #include "tinyxml.h"
+
+#include <cmath>
+#include <cstddef>
+#include <ostream>
+#include <string>
+#include <vector>
 
 
 void HMProperties::parse (const TiXmlElement* elem)
