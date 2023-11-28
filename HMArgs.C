@@ -15,12 +15,11 @@
 #include "IFEM.h"
 #include "LogStream.h"
 #include "Utilities.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 #include <iostream>
 #include <string>
 #include <strings.h>
-#include <vector>
 
 
 bool HMArgs::parseArg (const char* argv)
@@ -41,7 +40,7 @@ bool HMArgs::parseArg (const char* argv)
 }
 
 
-bool HMArgs::parse (const TiXmlElement* elem)
+bool HMArgs::parse (const tinyxml2::XMLElement* elem)
 {
   if (!strcasecmp(elem->Value(),"timestepping")) {
     std::string type;

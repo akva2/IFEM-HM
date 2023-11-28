@@ -15,11 +15,15 @@
 #define _SIM_MASS_TRANSFER_H
 
 #include "DataExporter.h"
+#include "Property.h"
 #include "Profiler.h"
 #include "SIMenums.h"
 #include "SIMMultiPatchModelGen.h"
 #include "SIMsolution.h"
 #include "TimeStep.h"
+#include "tinyxml2.h"
+#include "IFEM.h"
+
 
 /*!
   \brief Driver class for the mass transfer in the Beef problem simulator.
@@ -51,7 +55,7 @@ public:
 
   using Dim::parse;
   //! \brief Parses a data section from an XML element.
-  bool parse(const TiXmlElement* elem) override
+  bool parse(const tinyxml2::XMLElement* elem) override
   {
     if (!strcasecmp(elem->Value(), "hmproperties")) {
       mass.getProps().parse(elem);    
@@ -61,7 +65,7 @@ public:
     if (strcasecmp(elem->Value(),"masstransfer"))
       return this->Dim::parse(elem);
 
-    const TiXmlElement* child = elem->FirstChildElement();
+    const tinyxml2::XMLElement* child = elem->FirstChildElement();
     for (; child; child = child->NextSiblingElement())
       this->Dim::parse(child);
 

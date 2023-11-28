@@ -18,7 +18,7 @@
 #include "Vec3.h"
 
 
-class TiXmlElement;
+namespace tinyxml2 { class XMLElement; }
 
 
 /*!
@@ -37,7 +37,7 @@ public:
 
   //! \brief Parse settings from an xml element.
   //! \param elem The XML element to parse
-  void parse(const TiXmlElement* elem);
+  void parse(const tinyxml2::XMLElement* elem);
   //! \brief Print settings to terminal.
   void printLog();
 

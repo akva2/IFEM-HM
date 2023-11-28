@@ -16,7 +16,7 @@
 #include "LogStream.h"
 #include "Utilities.h"
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 #include <cmath>
 #include <cstddef>
@@ -25,11 +25,11 @@
 #include <vector>
 
 
-void HMProperties::parse (const TiXmlElement* elem)
+void HMProperties::parse (const tinyxml2::XMLElement* elem)
 {
   auto&& parseComp = [elem](const char* name, Component& out)
   {
-    const TiXmlElement* compElem = elem->FirstChildElement(name);
+    const tinyxml2::XMLElement* compElem = elem->FirstChildElement(name);
     if (compElem) {
       utl::getAttribute(compElem, "density", out.density);
       utl::getAttribute(compElem, "composition", out.composition);
@@ -40,12 +40,12 @@ void HMProperties::parse (const TiXmlElement* elem)
   parseComp("carbohydrate", carbohydrate);
   parseComp("water", water);
 
-  const TiXmlElement* waterComp = elem->FirstChildElement("water");
+  const tinyxml2::XMLElement* waterComp = elem->FirstChildElement("water");
   if (waterComp) {
     utl::getAttribute(waterComp, "capacity", water.capacity);
     utl::getAttribute(waterComp, "vaporization_heat", water.vaporization_heat);
   }
-  const TiXmlElement* meatComp = elem->FirstChildElement("meat");
+  const tinyxml2::XMLElement* meatComp = elem->FirstChildElement("meat");
   if (meatComp) {
     utl::getAttribute(meatComp, "conductivity", meat.conductivity);
     utl::getAttribute(meatComp, "permeability", meat.permeability);

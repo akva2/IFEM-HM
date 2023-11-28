@@ -43,7 +43,7 @@ public:
   virtual ~SIMHMBase() {}
 
   //! \brief Dummy parse method.
-  bool parse(const TiXmlElement*) override { return true; }
+  bool parse(const tinyxml2::XMLElement*) override { return true; }
 
   //! \brief Initializes and sets up field dependencies.
   void setupDependencies() override
@@ -73,10 +73,10 @@ public:
   }
 
   //! \brief Parse sub-iteration settings.
-  bool parse(const TiXmlElement* elem) override
+  bool parse(const tinyxml2::XMLElement* elem) override
   {
     if (!strcasecmp(elem->Value(), "heatmasstransfer")) {
-      const TiXmlElement* child = elem->FirstChildElement();
+      const tinyxml2::XMLElement* child = elem->FirstChildElement();
       for (; child; child = child->NextSiblingElement())
         if (!strcasecmp(child->Value(),"subiterations")) {
           this->parseIterations(child);

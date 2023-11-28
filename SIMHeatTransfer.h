@@ -23,7 +23,7 @@
 #include "SIMsolution.h"
 #include "TimeStep.h"
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 
 /*!
@@ -56,7 +56,7 @@ public:
 
   using Dim::parse;
   //! \brief Parses a data section from an XML element.
-  bool parse(const TiXmlElement* elem) override
+  bool parse(const tinyxml2::XMLElement* elem) override
   {
     if (!strcasecmp(elem->Value(), "hmproperties")) {
       heat.getProps().parse(elem);    
@@ -67,7 +67,7 @@ public:
     if (strcasecmp(elem->Value(),"heattransfer"))
       return this->Dim::parse(elem);
 
-    const TiXmlElement* child = elem->FirstChildElement();
+    const tinyxml2::XMLElement* child = elem->FirstChildElement();
     for (; child; child = child->NextSiblingElement())
       this->Dim::parse(child);
 
