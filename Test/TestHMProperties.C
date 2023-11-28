@@ -13,12 +13,12 @@
 #include "HMProperties.h"
 
 #include "gtest/gtest.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 TEST(TestHMProperties, Parse)
 {
   HMProperties hm;
-  TiXmlDocument doc;
+  tinyxml2::XMLDocument doc;
   doc.Parse(R"(<hmproperties heat_transfer_coef="33.4" oven_temperature="175"
               diffusion="4e-10" dissipation_coeff="0.88">
               <fat density="920" composition="0.03"/>
@@ -33,4 +33,3 @@ TEST(TestHMProperties, Parse)
   EXPECT_FLOAT_EQ(hm.meatHeatCapacity(), 3642.0);
   EXPECT_FLOAT_EQ(hm.meatThermalConductivity(), 0.4);
 }
-
