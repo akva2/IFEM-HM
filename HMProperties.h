@@ -82,32 +82,32 @@ protected:
 
   //! \brief Struct holding generic component parameters.
   struct Component {
-    double density; //!< Density of component
-    double composition; //!< Composition fraction for component
+    double density{}; //!< Density of component
+    double composition{}; //!< Composition fraction for component
   };
 
   //! \brief Struct holding parameters for the meat.
   struct Meat : public Component {
-    double conductivity; //!< Thermal conductivity of the meat
-    double permeability; //!< Permeability of the meat
+    double conductivity{}; //!< Thermal conductivity of the meat
+    double permeability{}; //!< Permeability of the meat
   };
 
   //! \brief Struct holding parameters for the water.
   struct Water : public Component {
-    double capacity; //!< Heat capacity of water
-    double vaporization_heat; //!< Latent vaporization heat of water
+    double capacity{}; //!< Heat capacity of water
+    double vaporization_heat{}; //!< Latent vaporization heat of water
   };
 
-  Component fat; //!< Properties of fat
-  Component protein; //!< Properties of protein
-  Component carbohydrate; //!< Properties of carbohydrates
-  Water water; //!< Properties of water
-  Meat meat; //!< Properties of meat
+  Component fat{}; //!< Properties of fat
+  Component protein{}; //!< Properties of protein
+  Component carbohydrate{}; //!< Properties of carbohydrates
+  Water water{}; //!< Properties of water
+  Meat meat{}; //!< Properties of meat
   double diffusion = 1.0; //!< Moisture diffusion coefficient
-  double diss_coeff; //!< Dissipation coefficient
-  double heat_transfer; //!< Heat transfer coefficient
-  double vaporization_heat; //!< Latent vaporization heat of water
-  double T_oven; //!< Oven temperature
+  double diss_coeff{}; //!< Dissipation coefficient
+  double heat_transfer{}; //!< Heat transfer coefficient
+  double vaporization_heat{}; //!< Latent vaporization heat of water
+  double T_oven{}; //!< Oven temperature
 
   static constexpr double E0 = 12e3; //!< Minimum elastic modulus for meat (raw meat)
   static constexpr double Em = 83e3; //!< Maximum elastic modulus for meat (80C)
