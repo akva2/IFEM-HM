@@ -62,10 +62,10 @@ endif()
 list(APPEND TEST_APPS HeatMassTransfer HeatTransfer)
 
 # Unit tests
-IFEM_add_test_app(${PROJECT_SOURCE_DIR}/Test/*.C
-                  ${PROJECT_SOURCE_DIR}/Test
-                  IFEM-HM 0
-                  CommonHM IFEMAppCommon ${IFEM_LIBRARIES})
+IFEM_add_test_app(SOURCES ${PROJECT_SOURCE_DIR}/Test/*.C
+                  WORKDIR ${PROJECT_SOURCE_DIR}/Test
+                  NAME IFEM-HM
+                  LIBRARIES CommonHM IFEMAppCommon ${IFEM_LIBRARIES})
 
 if(IFEM_COMMON_APP_BUILD)
   set(TEST_APPS ${TEST_APPS} PARENT_SCOPE)
