@@ -12,10 +12,14 @@
 
 #include "HMProperties.h"
 
-#include "gtest/gtest.h"
-#include "tinyxml2.h"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <tinyxml2.h>
 
-TEST(TestHMProperties, Parse)
+using Catch::Matchers::WithinRel;
+
+
+TEST_CASE("TestHMProperties.Parse")
 {
   HMProperties hm;
   tinyxml2::XMLDocument doc;
@@ -29,7 +33,7 @@ TEST(TestHMProperties, Parse)
               </hmproperties>)");
   hm.parse(doc.RootElement());
 
-  EXPECT_FLOAT_EQ(hm.meatDensity(), 1054.7112);
-  EXPECT_FLOAT_EQ(hm.meatHeatCapacity(), 3642.0);
-  EXPECT_FLOAT_EQ(hm.meatThermalConductivity(), 0.4);
+  REQUIRE_THAT(hm.meatDensity(), WithinRel(1054.7112, 1e-7));
+  REQUIRE_THAT(hm.meatHeatCapacity(), WithinRel(3642.0));
+  REQUIRE_THAT(hm.meatThermalConductivity(), WithinRel(0.4));
 }
