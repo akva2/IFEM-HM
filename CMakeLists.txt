@@ -1,56 +1,58 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 
-project(HeatMassTransfer)
+project(HeatMassTransfer LANGUAGES C CXX)
 
-# Add local modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-                      ${PROJECT_SOURCE_DIR}/../../cmake/Modules
-                      $ENV{HOME}/cmake/Modules)
-
-# Required packages
-IF (NOT IFEM_CONFIGURED)
+if(IFEM_AS_SUBMODULE)
+  if(NOT TARGET IFEM)
+    add_subdirectory(../.. IFEM)
+    set(IFEM_PATH ${PROJECT_SOURCE_DIR}/../..)
+  endif()
+else()
+  get_filename_component(BUILD_DIR ${PROJECT_BINARY_DIR} NAME)
+  set(IFEM_DIR ${PROJECT_SOURCE_DIR}/../../${BUILD_DIR})
   find_package(IFEM REQUIRED)
-  include_directories(${IFEM_INCLUDE_DIRS})
-  add_definitions(${IFEM_DEFINITIONS})
-ENDIF(NOT IFEM_CONFIGURED)
+endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${IFEM_CXX_FLAGS}")
+ifem_add_library(
+  NAME
+    CommonHM
+  SOURCES
+    HeatTransfer.C
+    HMArgs.C
+    HMProperties.C
+    MassTransfer.C
+  HEADERS
+    HeatTransfer.h
+    HMArgs.h
+    HMProperties.h
+    MassTransfer.h
+    SIMHeatTransfer.h
+    SIMHM.h
+    SIMMassTransfer.h
+  LIBRARIES
+    IFEMAppCommon IFEM
+)
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+ifem_add_application(
+  NAME
+    HeatMassTransfer
+  SOURCES
+    main_HM.C
+  LIBRARIES
+    CommonHM
+)
 
-include_directories(${IFEM_INCLUDES} ../Common ${PROJECT_SOURCE_DIR})
-
-set(HM_SOURCES HeatTransfer.C
-               HeatTransfer.h
-               HMArgs.C
-               HMArgs.h
-               HMProperties.C
-               HMProperties.h
-               MassTransfer.C
-               MassTransfer.h
-               SIMHeatTransfer.h
-               SIMHM.h
-               SIMMassTransfer.h)
-
-add_library(CommonHM ${HM_SOURCES})
-
-add_executable(HeatMassTransfer main_HM.C)
-target_link_libraries(HeatMassTransfer CommonHM IFEMAppCommon ${IFEM_LIBRARIES})
-add_executable(HeatTransfer main_HeatTransfer.C)
-target_link_libraries(HeatTransfer CommonHM IFEMAppCommon ${IFEM_LIBRARIES})
-
-list(APPEND CHECK_SOURCES ${HM_SOURCES} main_HM.C main_HeatTransfer.C)
-
-# Installation
-install(TARGETS HeatMassTransfer DESTINATION bin)
-
-# For generating the doxy
-set(EXTRA_DOXY_PATHS "${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}")
-add_doc_target(HeatMassTransfer HeatMassTransfer)
+ifem_add_application(
+  NAME
+    HeatTransfer
+  SOURCES
+    main_HeatTransfer.C
+  LIBRARIES
+    CommonHM
+)
 
 # Testing
 enable_testing()
-include(IFEMTesting)
 
 if(MPI_FOUND)
 endif()
@@ -62,13 +64,19 @@ endif()
 list(APPEND TEST_APPS HeatMassTransfer HeatTransfer)
 
 # Unit tests
-IFEM_add_test_app(SOURCES ${PROJECT_SOURCE_DIR}/Test/*.C
+ifem_add_test_app(SOURCES ${PROJECT_SOURCE_DIR}/Test/TestHMProperties.C
                   WORKDIR ${PROJECT_SOURCE_DIR}/Test
                   NAME IFEM-HM
-                  LIBRARIES CommonHM IFEMAppCommon ${IFEM_LIBRARIES})
+                  LIBRARIES CommonHM)
 
 if(IFEM_COMMON_APP_BUILD)
   set(TEST_APPS ${TEST_APPS} PARENT_SCOPE)
 else()
-  add_check_target()
+  ifem_add_check_target()
 endif()
+
+# For generating the doxy
+ifem_add_doc_target(APP HeatMassTransfer)
+
+# Installation
+install(TARGETS HeatMassTransfer DESTINATION bin)
