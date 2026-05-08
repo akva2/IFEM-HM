@@ -15,7 +15,9 @@ endif()
 
 ifem_add_library(
   NAME
-    CommonHM
+    HM
+  ALIAS
+    IFEM::HeatMassTransfer
   SOURCES
     HeatTransfer.C
     HMArgs.C
@@ -33,6 +35,11 @@ ifem_add_library(
     IFEM
     IFEM::AppUtils
 )
+set_target_properties(HM
+  PROPERTIES
+  ARCHIVE_OUTPUT_NAME
+    HeatMassTransfer
+)
 
 ifem_add_application(
   NAME
@@ -40,7 +47,7 @@ ifem_add_application(
   SOURCES
     main_HM.C
   LIBRARIES
-    CommonHM
+    IFEM::HeatMassTransfer
 )
 
 ifem_add_application(
@@ -49,7 +56,7 @@ ifem_add_application(
   SOURCES
     main_HeatTransfer.C
   LIBRARIES
-    CommonHM
+    IFEM::HeatMassTransfer
 )
 
 # Testing
@@ -79,13 +86,13 @@ ifem_add_regression_test(
 # Unit tests
 ifem_add_test_app(
   NAME
-    HM
+    HeatMassTransfer
   SOURCES
     ${PROJECT_SOURCE_DIR}/Test/TestHMProperties.C
   WORKDIR
     ${PROJECT_SOURCE_DIR}/Test
   LIBRARIES
-    CommonHM
+    IFEM::HeatMassTransfer
 )
 
 if(IFEM_COMMON_APP_BUILD)
