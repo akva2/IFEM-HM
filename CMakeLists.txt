@@ -30,7 +30,8 @@ ifem_add_library(
     SIMHM.h
     SIMMassTransfer.h
   LIBRARIES
-    IFEMAppCommon IFEM
+    IFEM
+    IFEM::AppUtils
 )
 
 ifem_add_application(
