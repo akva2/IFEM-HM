@@ -18,6 +18,8 @@ ifem_add_library(
     HM
   ALIAS
     IFEM::HeatMassTransfer
+  ARCHIVE_NAME
+    HeatMassTransfer
   SOURCES
     HeatTransfer.C
     HMArgs.C
@@ -34,11 +36,6 @@ ifem_add_library(
   LIBRARIES
     IFEM
     IFEM::AppUtils
-)
-set_target_properties(HM
-  PROPERTIES
-  ARCHIVE_OUTPUT_NAME
-    HeatMassTransfer
 )
 
 ifem_add_application(
