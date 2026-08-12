@@ -50,8 +50,6 @@ public:
     //! \param[in] n Number of spatial dimensions
     //! \param[in] itg Main integrand instance
     Robin(unsigned short int n, const HeatTransfer& itg);
-    //! \brief Empty destructor.
-    virtual ~Robin() {}
 
     //! \brief Returns that this integrand has no interior contributions.
     bool hasInteriorTerms() const override { return false; }
@@ -93,9 +91,6 @@ public:
                         bool mass = true,
                         TimeIntegration::Method method = TimeIntegration::BE);
 
-  //! \brief Empty destructor.
-  virtual ~HeatTransfer() {}
-
   using IntegrandBase::initElement;
   //! \brief Initializes current element for numerical integration.
   //! \param[in] MNPC Matrix of nodal point correspondance for current element
@@ -130,19 +125,18 @@ public:
   bool evalBou(LocalIntegral& elmInt, const FiniteElement& fe,
                const Vec3& X, const Vec3& normal) const override;
 
-  //! \brief Returns a const ref to the problem properties.
+  //! \brief Returns a const reference to the problem properties.
   const HMProperties& getProps() const { return props; }
   //! \brief Returns a reference to the problem properties.
   HMProperties& getProps() { return props; }
 
-  //! \brief Advance time stepping
-  void advanceStep() { bdf.advanceStep(); }
+  //! \brief Advance time stepping.
+  bool advanceStep() override { return bdf.advanceStep(); }
 
-  //! \brief True if mass terms are enabled.
+  //! \brief Returns \e true if mass terms are enabled.
   bool enableMass() const { return withMass; }
 
   //! \brief Returns the name of the primary solution field.
-  //! \param[in] prefix Name prefix
   std::string getField1Name (size_t, const char* prefix) const override;
 
 protected:
