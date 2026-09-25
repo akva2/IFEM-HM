@@ -198,7 +198,7 @@ public:
   //! \brief Preprocessing performed before the FEM model generation.
   //! \details This method is reimplemented to couple the weak Dirichlet
   //! integrand to the Robin property codes.
-  void preprocessA() override
+  bool preprocessA() override
   {
     Dim::myInts.insert(std::make_pair(0,Dim::myProblem));
 
@@ -206,6 +206,8 @@ public:
       if (p.pcode == Property::ROBIN)
         if (Dim::myInts.find(p.pindx) == Dim::myInts.end())
           Dim::myInts.insert(std::make_pair(p.pindx,&robinBC));
+
+    return true;
   }
 
 protected:
